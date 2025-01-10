@@ -9,6 +9,7 @@ import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/solid'
 
 defineProps(["exercises"]);
 const form = useForm({});
@@ -45,7 +46,10 @@ const deleteExercise = () => {
             <div class="flex justify-between">
                 <h1>Exercise Index Page</h1>
                 <Link :href="route('exercises.create')"
-                    class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700">New Exercise
+                    class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700">
+                <span class="flex items-center">
+                    <PlusIcon class="h-5 w-5 mr-1" />Exercise
+                </span>
                 </Link>
             </div>
             <div class="mt-6">
@@ -61,13 +65,14 @@ const deleteExercise = () => {
                         <TableRow v-for="exercise in exercises" :key="exercise.id" class="border-b">
                             <TableDataCell>{{ exercise.id }}</TableDataCell>
                             <TableDataCell>{{ exercise.name }}</TableDataCell>
-                            <TableDataCell class="space-x-4">
+                            <TableDataCell class="space-x-4 flex items-center">
                                 <Link :href="route('exercises.edit', exercise)"
-                                    class="text-green-400 hover:text-green-600">Edit
+                                    class="text-blue-400 hover:text-blue-600">
+                                <PencilIcon class="h-5 w-5 mr-1" />
                                 </Link>
-                                <button @click="confirmDeleteExercise(exercise.id)"
+                                <button @click="confirmDeleteExercise(exercise.id)" 
                                     class="text-red-400 hover:text-red-600">
-                                    Delete
+                                    <TrashIcon class="h-5 w-5 mr-1"/>
                                 </button>
                             </TableDataCell>
                         </TableRow>
