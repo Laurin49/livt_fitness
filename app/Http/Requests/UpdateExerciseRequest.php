@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreExerciseRequest extends FormRequest
+class UpdateExerciseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class StoreExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:250', Rule::unique('exercises', 'name')->ignore($this->exercise)],
-            'category_id' => 'required',
+            'name' => ['required', 'string', 'max:255', Rule::unique('exercises', 'name')->ignore($this->exercise)],
+            'category_id' => ['sometimes', 'required'],
         ];
     }
 }
