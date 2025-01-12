@@ -10,8 +10,11 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import Pagination from '@/Components/Pagination.vue';
 
-defineProps(["exercises"]);
+defineProps({
+    exercises: Object,
+});
 const form = useForm({});
 
 const showConfirmDeleteExerciseModal = ref(false);
@@ -69,7 +72,7 @@ const deleteExercise = () => {
                         </TableRow>
                     </template>
                     <template #default>
-                        <TableRow v-for="exercise in exercises" :key="exercise.id" class="border-b">
+                        <TableRow v-for="exercise in exercises.data" :key="exercise.id" class="border-b">
                             <TableDataCell>{{ exercise.id }}</TableDataCell>
                             <TableDataCell>{{ exercise.name }}</TableDataCell>
                             <TableDataCell>{{ exercise.category.name }}</TableDataCell>
@@ -121,6 +124,7 @@ const deleteExercise = () => {
                         </Modal>
                     </template>
                 </Table>
+                <Pagination :meta="exercises.meta" class="mt-4 flex justify-end" />
             </div>
         </div>
     </AuthenticatedLayout>
