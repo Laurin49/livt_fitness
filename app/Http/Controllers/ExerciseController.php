@@ -17,8 +17,11 @@ class ExerciseController extends Controller
      */
     public function index()
     {
+        // $exercises = Exercise::latest()->paginate(10);
+        // $exercises = Exercise::with('category')->paginate();
+        // dd($exercises);
         return Inertia::render('Fitness/Exercises/ExerciseIndex', [
-            'exercises' => ExerciseResource::collection(Exercise::with('category')->get())
+            'exercises' => ExerciseResource::collection(Exercise::with('category')->paginate(5))
         ]);
     }
 
