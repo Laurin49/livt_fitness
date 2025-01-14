@@ -24,6 +24,7 @@ class UpdateWorkoutRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:250', Rule::unique('workouts', 'name')->ignore($this->workout)],
+            'category_id' => ['sometimes', 'required'],
         ];
     }
 }

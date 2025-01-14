@@ -12,9 +12,11 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    categories: Array
 });
 const form = useForm({
     name: props.workout?.name,
+    category_id: props.workout?.category_id,
 });
 </script>
 
@@ -41,7 +43,16 @@ const form = useForm({
                             autocomplete="name" />
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
-
+                    <div class="mt-4">
+                        <InputLabel for="category_id" value="Category" />
+                        <select id="category_id" v-model="form.category_id" class="block w-full mt-1">
+                            <option value="">Select a category</option>
+                            <option v-for="category in categories" :key="category.id" :value="category.id">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.category_id" />
+                    </div>
                     <div class="flex items-center mt-4">
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             <PencilIcon class="h-5 w-5 mr-1" />Update
