@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkoutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::get('/', function () {
 
 Route::resource('/categories', CategoryController::class)->middleware(['auth']);
 Route::resource('/exercises', ExerciseController::class)->middleware(['auth']);
+Route::resource('/workouts', WorkoutController::class)->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
