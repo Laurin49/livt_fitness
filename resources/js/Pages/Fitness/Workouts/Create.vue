@@ -6,12 +6,15 @@ import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { BackwardIcon, PlusIcon } from "@heroicons/vue/24/solid";
+import moment from "moment";
 
 defineProps({
     categories: Array
 });
+const formatter = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' });
 const form = useForm({
     name: "",
+    datum: moment().format('YYYY-MM-DD'),
     category_id: "",
 });
 </script>
@@ -39,6 +42,11 @@ const form = useForm({
                         <TextInput id="name" type="text" class="block w-full mt-1" v-model="form.name" autofocus
                             autocomplete="name" />
                         <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+                    <div class="mt-4">
+                        <InputLabel for="datum" value="Datum" />
+                        <TextInput id="datum" type="date" class="block w-full mt-1" v-model="form.datum" />
+                        <InputError class="mt-2" :message="form.errors.datum" />
                     </div>
                     <div class="mt-4">
                         <InputLabel for="category_id" value="Category" />

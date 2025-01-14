@@ -16,6 +16,7 @@ defineProps({
     workouts: Object,
 });
 const form = useForm({});
+const formatter = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
 const showConfirmDeleteWorkoutModal = ref(false);
 const currentWorkoutId = ref(0);
@@ -66,6 +67,7 @@ const deleteWorkout = () => {
                         <TableRow>
                             <TableHeaderCell>ID</TableHeaderCell>
                             <TableHeaderCell>Name</TableHeaderCell>
+                            <TableHeaderCell>Datum</TableHeaderCell>
                             <TableHeaderCell>Kategorie</TableHeaderCell>
                             <TableHeaderCell class="text-end">Edit</TableHeaderCell>
                             <TableHeaderCell class="text-end">Delete</TableHeaderCell>
@@ -75,6 +77,9 @@ const deleteWorkout = () => {
                         <TableRow v-for="workout in workouts.data" :key="workout.id" class="border-b">
                             <TableDataCell>{{ workout.id }}</TableDataCell>
                             <TableDataCell>{{ workout.name }}</TableDataCell>
+                            <TableDataCell>
+                                {{ formatter.format(new Date(workout.datum)) }}
+                            </TableDataCell>
                             <TableDataCell>{{ workout.category.name }}</TableDataCell>
                             <TableDataCell>
                                 <div class="text-end flex justify-end">

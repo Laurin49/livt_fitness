@@ -16,6 +16,7 @@ const props = defineProps({
 });
 const form = useForm({
     name: props.workout?.name,
+    datum: props.workout?.datum,
     category_id: props.workout?.category_id,
 });
 </script>
@@ -42,6 +43,11 @@ const form = useForm({
                         <TextInput id="name" type="text" class="block w-full mt-1" v-model="form.name" autofocus
                             autocomplete="name" />
                         <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+                    <div class="mt-4">
+                        <InputLabel for="datum" value="Datum" />
+                        <TextInput id="datum" type="date" class="block w-full mt-1" v-model="form.datum" />
+                        <InputError class="mt-2" :message="form.errors.datum" />
                     </div>
                     <div class="mt-4">
                         <InputLabel for="category_id" value="Category" />

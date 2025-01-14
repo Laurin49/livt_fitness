@@ -9,7 +9,7 @@ class Workout extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'datum', 'category_id'];
 
     public function category()
     {
