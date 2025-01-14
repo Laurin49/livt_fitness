@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Http\Requests\UpdateWorkoutRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\WorkoutResource;
+use App\Models\Category;
 use App\Models\Workout;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +19,7 @@ class WorkoutController extends Controller
     public function index()
     {
         return Inertia::render('Fitness/Workouts/WorkoutIndex', [
-            'workouts' => WorkoutResource::collection(Workout::paginate(10))
+            'workouts' => WorkoutResource::collection(Workout::with('category')->paginate(10))
         ]);
     }
 
@@ -26,7 +28,8 @@ class WorkoutController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Fitness/Workouts/Create');
+        $categories = CategoryResource::collection(Category::all());
+        return Inertia::render('Fitness/Workouts/Create', compact('categories'));
     }
 
     /**
@@ -51,8 +54,9 @@ class WorkoutController extends Controller
      */
     public function edit(Workout $workout)
     {
+        $categories = CategoryResource::collection(Category::all());
         return Inertia::render(
-            'Fitness/Workouts/Edit', compact('workout')
+            'Fitness/Workouts/Edit', compact('workout', 'categories')
         );
     }
 

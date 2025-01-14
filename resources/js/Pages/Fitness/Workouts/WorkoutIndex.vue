@@ -66,6 +66,7 @@ const deleteWorkout = () => {
                         <TableRow>
                             <TableHeaderCell>ID</TableHeaderCell>
                             <TableHeaderCell>Name</TableHeaderCell>
+                            <TableHeaderCell>Kategorie</TableHeaderCell>
                             <TableHeaderCell class="text-end">Edit</TableHeaderCell>
                             <TableHeaderCell class="text-end">Delete</TableHeaderCell>
                         </TableRow>
@@ -74,6 +75,7 @@ const deleteWorkout = () => {
                         <TableRow v-for="workout in workouts.data" :key="workout.id" class="border-b">
                             <TableDataCell>{{ workout.id }}</TableDataCell>
                             <TableDataCell>{{ workout.name }}</TableDataCell>
+                            <TableDataCell>{{ workout.category.name }}</TableDataCell>
                             <TableDataCell>
                                 <div class="text-end flex justify-end">
                                     <div class="relative group">
