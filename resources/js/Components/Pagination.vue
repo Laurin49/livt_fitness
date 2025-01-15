@@ -1,18 +1,64 @@
-<template>
-    <div class="flex gap-1 items-center">
-
-        <Link 
-            v-for="(link, index) in meta.links" 
-            :key="index" 
-            :href="link.url" 
-            class="px-4 py-2 rounded-md"
-            :class="{ 'bg-indigo-500 dark:bg-indigo-800 text-gray-300': link.active }" v-html="link.label" />
-        <h3>Page {{ meta.current_page }}/{{ meta.last_page }}</h3>
-    </div>
-</template>
 <script setup>
-import { Link } from '@inertiajs/inertia-vue3'
+import { router } from "@inertiajs/vue3";
+
 defineProps({
-    meta: Object,
-})
+    data: {
+        type: Object,
+        required: true,
+    },
+    updatedPageNumber: {
+        type: Function,
+        required: true,
+    },
+});
 </script>
+
+<template>
+            <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="flex-1 flex justify-between sm:hidden" />
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing
+                                <!-- space -->
+                                <span class="font-medium">{{
+                                    data.meta.from
+                                    }}</span>
+                                <!-- space -->
+                                to
+                                <!-- space -->
+                                <span class="font-medium">{{
+                                    data.meta.to
+                                    }}</span>
+                                <!-- space -->
+                                of
+                                <!-- space -->
+                                <span class="font-medium">
+                                    {{ data.meta.total }}
+                                </span>
+                                <!-- space -->
+                                results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                                aria-label="Pagination">
+                                <button @click.prevent="updatedPageNumber(link)"
+                                    v-for="(link, index) in data.meta.links" :key="index"
+                                    :disabled="link.active || !link.url"
+                                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                                    :class="{
+                                        'z-10 bg-indigo-50 border-indigo-500 text-indigo-600':
+                                            link.active,
+                                        'bg-white border-gray-300 text-gray-500 hover:bg-gray-50':
+                                            !link.active,
+                                    }">
+                                    <span v-html="link.label"></span>
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</template>

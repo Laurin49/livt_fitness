@@ -7,8 +7,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Modal from '@/Components/Modal.vue';
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { ref, computed, watch } from "vue";
 import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/vue/24/solid';
 import Pagination from '@/Components/Pagination.vue';
 
@@ -16,6 +16,24 @@ defineProps({
     exercises: Object,
 });
 const form = useForm({});
+
+// Pagination
+let pageNumber = ref(1);
+let exercisesUrl = computed(() => {
+    let url = new URL(route("exercises.index"));
+    url.searchParams.append("page", pageNumber.value);
+    return url;
+});
+const updatedPageNumber = (link) => {
+    pageNumber.value = link.url.split("=")[1];
+};
+watch(() => exercisesUrl.value, (updatedExercisesUrl) => {
+    router.visit(updatedExercisesUrl, {
+        preserveScroll: true,
+        preserveState: true,
+        replace: true,
+    });
+});
 
 const showConfirmDeleteExerciseModal = ref(false);
 const currentExerciseId = ref(0);
@@ -124,7 +142,7 @@ const deleteExercise = () => {
                         </Modal>
                     </template>
                 </Table>
-                <Pagination :meta="exercises.meta" class="mt-4 flex justify-end" />
+                <Pagination :data="exercises" :updatedPageNumber="updatedPageNumber" />
             </div>
         </div>
     </AuthenticatedLayout>
