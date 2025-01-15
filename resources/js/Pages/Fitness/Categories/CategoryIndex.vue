@@ -9,6 +9,7 @@ import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/vue/24/solid';
 
 defineProps(["categories"]);
 const form = useForm({});
@@ -37,16 +38,24 @@ const deleteCategory = () => {
     <Head title="Category Index" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Categories</h2>
-        </template>
-
         <div class="py-2 px-2 mx-auto max-w-7xl">
-            <div class="flex justify-between">
-                <h1>Categories Index Page</h1>
-                <Link :href="route('categories.create')"
-                    class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700">New Category
-                </Link>
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-semibold text-gray-700">Category Index Page</h1>
+                </div>
+                <div class="relative group">
+                    <Link :href="route('categories.create')"
+                        class="flex items-center px-3 py-2 font-semibold text-indigo-400 hover:text-indiogo-600 rounded">
+                    <span class="px-3 py-2 font-semibold bg-blue-400 text-white hover:bg-blue-600 flex items-center">
+                        <PlusIcon class="h-5 w-5 mr-1" />Create
+                    </span>
+                    </Link>
+                    <!-- Tooltip -->
+                    <div
+                        class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        Create Category
+                    </div>
+                </div>
             </div>
             <div class="mt-6">
                 <Table>
@@ -54,21 +63,43 @@ const deleteCategory = () => {
                         <TableRow>
                             <TableHeaderCell>ID</TableHeaderCell>
                             <TableHeaderCell>Name</TableHeaderCell>
-                            <TableHeaderCell>Action</TableHeaderCell>
+                            <TableHeaderCell class="text-end">Edit</TableHeaderCell>
+                            <TableHeaderCell class="text-end">Delete</TableHeaderCell>
                         </TableRow>
                     </template>
                     <template #default>
                         <TableRow v-for="category in categories" :key="category.id" class="border-b">
                             <TableDataCell>{{ category.id }}</TableDataCell>
                             <TableDataCell>{{ category.name }}</TableDataCell>
-                            <TableDataCell class="space-x-4">
-                                <Link :href="route('categories.edit', category)"
-                                    class="text-green-400 hover:text-green-600">Edit
-                                </Link>
-                                <button @click="confirmDeleteCategory(category.id)"
-                                    class="text-red-400 hover:text-red-600">
-                                    Delete
-                                </button>
+                            <TableDataCell>
+                                <div class="text-end flex justify-end">
+                                    <div class="relative group">
+                                        <Link :href="route('categories.edit', category.id)"
+                                            class="text-green-400 hover:text-green-600">
+                                        <PencilIcon class="h-5 w-5" />
+                                        </Link>
+                                        <!-- Tooltip -->
+                                        <div
+                                            class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Edit
+                                        </div>
+                                    </div>
+                                </div>
+                            </TableDataCell>
+                            <TableDataCell>
+                                <div class="text-end flex justify-end">
+                                    <div class="relative group">
+                                        <button @click="confirmDeleteCategory(category.id)"
+                                            class="text-red-400 hover:text-red-600">
+                                            <TrashIcon class="h-5 w-5" />
+                                        </button>
+                                        <!-- Tooltip -->
+                                        <div
+                                            class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Delete
+                                        </div>
+                                    </div>
+                                </div>
                             </TableDataCell>
                         </TableRow>
                         <Modal :show="showConfirmDeleteCategoryModal" @close="closeModal">

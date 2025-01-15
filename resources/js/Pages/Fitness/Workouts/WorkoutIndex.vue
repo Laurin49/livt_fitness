@@ -7,8 +7,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Modal from '@/Components/Modal.vue';
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { ref, computed, watch } from "vue";
 import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/vue/24/solid';
 import Pagination from '@/Components/Pagination.vue';
 
@@ -18,6 +18,26 @@ defineProps({
 const form = useForm({});
 const formatter = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
+// Pagination
+let pageNumber = ref(1);
+let workoutsUrl = computed(() => {
+    let url = new URL(route("workouts.index"));
+    url.searchParams.append("page", pageNumber.value);
+    return url;
+});
+const updatedPageNumber = (link) => {
+    pageNumber.value = link.url.split("=")[1];
+};
+watch(() => workoutsUrl.value, (updatedWorkoutsUrl) => {
+    router.visit(updatedWorkoutsUrl, {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        });
+    }
+);
+
+// Delete Workout + Modal Dialog
 const showConfirmDeleteWorkoutModal = ref(false);
 const currentWorkoutId = ref(0);
 
@@ -128,7 +148,7 @@ const deleteWorkout = () => {
                         </Modal>
                     </template>
                 </Table>
-                <Pagination :meta="workouts.meta" class="mt-4 flex justify-end" />
+                <Pagination :data="workouts" :updatedPageNumber="updatedPageNumber" />
             </div>
         </div>
     </AuthenticatedLayout>
