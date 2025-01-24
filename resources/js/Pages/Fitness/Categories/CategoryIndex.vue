@@ -39,13 +39,13 @@ const deleteCategory = () => {
 
     <AuthenticatedLayout>
         <div class="py-2 px-2 mx-auto max-w-7xl">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-2xl font-semibold text-gray-700">Category Index Page</h1>
-                </div>
+            <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
+                <h1 class="text-2xl font-semibold text-gray-700">Category Index Page</h1>
+            </div>
+            <div class="flex justify-end items-center">
                 <div class="relative group">
                     <Link :href="route('categories.create')"
-                        class="flex items-center px-3 py-2 font-semibold text-indigo-400 hover:text-indiogo-600 rounded">
+                        class="flex items-center pr-1 font-semibold text-indigo-400 hover:text-indiogo-600 rounded">
                     <span class="px-3 py-2 font-semibold bg-blue-400 text-white hover:bg-blue-600 flex items-center">
                         <PlusIcon class="h-5 w-5 mr-1" />Create
                     </span>

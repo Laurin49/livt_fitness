@@ -19,7 +19,7 @@ class ExerciseController extends Controller
     {
         $exerciseQuery = Exercise::search($request);
 
-        $exercises = ExerciseResource::collection($exerciseQuery->with('category')->paginate(10));
+        $exercises = ExerciseResource::collection($exerciseQuery->with('category')->latest()->paginate(10));
         $categories = CategoryResource::collection(Category::all());
 
         return Inertia::render('Fitness/Exercises/ExerciseIndex', [
@@ -45,7 +45,7 @@ class ExerciseController extends Controller
     public function store(StoreExerciseRequest $request)
     {
         Exercise::create($request->validated());
-        return redirect()->route('exercises.index');
+        return redirect()->route('exercises.index')->with('success', 'Exercise created successfully');
     }
 
     /**
@@ -73,7 +73,7 @@ class ExerciseController extends Controller
     public function update(StoreExerciseRequest $request, Exercise $exercise)
     {
         $exercise->update($request->validated());
-        return redirect()->route('exercises.index');
+        return redirect()->route('exercises.index')->with('success', 'Exercise updated successfully');
     }
 
     /**
@@ -82,6 +82,6 @@ class ExerciseController extends Controller
     public function destroy(Exercise $exercise)
     {
         $exercise->delete();
-        return redirect()->route('exercises.index');  
+        return redirect()->route('exercises.index')->with('success', 'Exercise deleted successfully');
     }
 }

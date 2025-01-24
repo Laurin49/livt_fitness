@@ -46,7 +46,7 @@ class WorkoutController extends Controller
     public function store(StoreWorkoutRequest $request)
     {
         Workout::create($request->validated());
-        return redirect()->route('workouts.index');
+        return redirect()->route('workouts.index')->with('success', 'Workout created successfully');
     }
 
     /**
@@ -74,7 +74,7 @@ class WorkoutController extends Controller
     public function update(UpdateWorkoutRequest $request, Workout $workout)
     {
         $workout->update($request->validated());
-        return redirect()->route('workouts.index');
+        return redirect()->route('workouts.index')->with('success', 'Workout updated successfully');
     }
 
     /**
@@ -83,6 +83,6 @@ class WorkoutController extends Controller
     public function destroy(Workout $workout)
     {
         $workout->delete();
-        return redirect()->route('workouts.index'); 
+        return redirect()->route('workouts.index')->with('success', 'Workout deleted successfully');
     }
 }
