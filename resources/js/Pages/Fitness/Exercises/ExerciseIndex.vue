@@ -9,8 +9,8 @@ import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { Head, Link, useForm, router, usePage } from '@inertiajs/vue3';
 import { ref, computed, watch } from "vue";
-import { PencilIcon, TrashIcon, PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import Pagination from '@/Components/Pagination.vue';
+import { PencilIcon, TrashIcon, PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import MagnifyingGlass from '@/Components/Icons/MagnifyingGlass.vue';
 
 defineProps({

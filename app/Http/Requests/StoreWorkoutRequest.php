@@ -23,7 +23,7 @@ class StoreWorkoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:250', Rule::unique('workouts', 'name')->ignore($this->workout)],
+            'name' => ['required', 'string', 'max:250'],
             'datum' => 'required|date',
             'category_id' => 'required',
         ];

@@ -105,6 +105,9 @@ const deleteWorkout = () => {
 
     <AuthenticatedLayout>
         <div class="py-2 px-2 mx-auto max-w-7xl">
+            <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
+                <h1 class="text-2xl font-semibold text-gray-700">Workout Index Page</h1>
+            </div>
             <div class="flex justify-between items-center">
                 <div class="flex sm:flex-row mt-2">
                     <div class="relative text-sm text-gray-800 col-span-3 flex items-center">
