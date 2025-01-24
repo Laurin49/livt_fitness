@@ -16,10 +16,18 @@ class WorkoutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $workoutQuery = Workout::search($request);
+
+        $workouts = WorkoutResource::collection($workoutQuery->with('category')->latest()->paginate(10));
+        $categories = CategoryResource::collection(Category::all());
+
         return Inertia::render('Fitness/Workouts/WorkoutIndex', [
-            'workouts' => WorkoutResource::collection(Workout::with('category')->paginate(10))
+            'workouts' => $workouts,
+            'categories' => $categories,
+            'category_id' => $request->category_id ?? '',
+            'search' => $request->search ?? '',
         ]);
     }
 
