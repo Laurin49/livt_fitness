@@ -15,10 +15,18 @@ class ExerciseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $exerciseQuery = Exercise::search($request);
+
+        $exercises = ExerciseResource::collection($exerciseQuery->with('category')->paginate(10));
+        $categories = CategoryResource::collection(Category::all());
+
         return Inertia::render('Fitness/Exercises/ExerciseIndex', [
-            'exercises' => ExerciseResource::collection(Exercise::with('category')->paginate(10))
+            'exercises' => $exercises,
+            'categories' => $categories,
+            'category_id' => $request->category_id ?? '',
+            'search' => $request->search ?? '',
         ]);
     }
 

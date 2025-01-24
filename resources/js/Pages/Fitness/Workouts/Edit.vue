@@ -32,7 +32,7 @@ const form = useForm({
                     <div>
                         <h1 class="text-2xl font-semibold text-gray-700">Update Workout</h1>
                     </div>
-                    <Link :href="route('workouts.index')"
+                    <Link href="#" onclick="history.back()"
                         class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700 flex items-center">
                     <BackwardIcon class="h-5 w-5 mr-1" />Back
                     </Link>
