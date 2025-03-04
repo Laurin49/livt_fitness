@@ -107,6 +107,10 @@ class WorkoutController extends Controller
     public function attachExercise(Request $request, Workout $workout)
     {
         // dd($request);
+        $request->validate([
+            'attach_exercise_id' => 'required',
+            'beschreibung' => 'required',
+        ]);
         $workout->exercises()->attach($request->attach_exercise_id, ['beschreibung' => $request->beschreibung]);
 
         $this->show($workout);
