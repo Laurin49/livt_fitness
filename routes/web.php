@@ -31,6 +31,19 @@ Route::get('/', function () {
 Route::resource('/categories', CategoryController::class)->middleware(['auth']);
 Route::resource('/exercises', ExerciseController::class)->middleware(['auth']);
 Route::resource('/workouts', WorkoutController::class)->middleware(['auth']);
+Route::post('/workouts/{workout}/attach.exercise', [WorkoutController::class, 'attachExercise'])
+    ->name('workouts.attach.exercise')
+    ->middleware(['auth']);
+Route::post('/workouts/{workout}/detach.exercise', [WorkoutController::class, 'detachExercise'])
+    ->name('workouts.detach.exercise')
+    ->middleware(['auth']);
+Route::post('/workouts/{workout}/copy', [WorkoutController::class, 'copy_workout'])
+    ->name('workouts.copy')
+    ->middleware(['auth']);
+Route::put('/workouts/{workout}/update.beschreibung', [WorkoutController::class, 'updateBeschreibung'])
+    ->name('workouts.update.beschreibung')
+    ->middleware(['auth']);
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

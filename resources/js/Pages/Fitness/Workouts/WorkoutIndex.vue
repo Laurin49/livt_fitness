@@ -10,7 +10,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { Head, Link, useForm, router, usePage } from '@inertiajs/vue3';
 import { ref, computed, watch } from "vue";
 import Pagination from '@/Components/Pagination.vue';
-import { PencilIcon, TrashIcon, PlusIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import { PencilIcon, TrashIcon, PlusIcon, XMarkIcon, ChevronDoubleRightIcon, DocumentDuplicateIcon } from '@heroicons/vue/24/solid';
 import MagnifyingGlass from '@/Components/Icons/MagnifyingGlass.vue';
 
 defineProps({
@@ -77,6 +77,18 @@ const resetSearch = () => {
 const resetAll = () => {
     search.value = "";
     category_id.value = "";
+};
+
+// Copy Workout
+const copyWorkout = (id) => {
+    form.post(route("workouts.copy", id), {
+        onSuccess: () => {
+            console.log("Copy Workout succesfully");
+        },
+        onError: () => {
+            console.log("Copy Workout failed");
+        },
+    });
 };
 
 // Delete Workout + Modal Dialog
@@ -163,6 +175,8 @@ const deleteWorkout = () => {
                             <TableHeaderCell>Name</TableHeaderCell>
                             <TableHeaderCell>Datum</TableHeaderCell>
                             <TableHeaderCell>Kategorie</TableHeaderCell>
+                            <TableHeaderCell class="text-end">Show</TableHeaderCell>
+                            <TableHeaderCell class="text-end">Copy</TableHeaderCell>
                             <TableHeaderCell class="text-end">Edit</TableHeaderCell>
                             <TableHeaderCell class="text-end">Delete</TableHeaderCell>
                         </TableRow>
@@ -175,6 +189,38 @@ const deleteWorkout = () => {
                                 {{ formatter.format(new Date(workout.datum)) }}
                             </TableDataCell>
                             <TableDataCell>{{ workout.category.name }}</TableDataCell>
+                            <TableDataCell>
+                                <div class="text-end flex justify-end">
+                                    <div class="relative group">
+                                        <Link :href="route('workouts.show', workout.id)"
+                                            class="text-blue-400 hover:text-blue-600">
+                                        <ChevronDoubleRightIcon class="h-5 w-5" />
+                                        </Link>
+                                        <!-- Tooltip -->
+                                        <div
+                                            class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Show
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </TableDataCell>
+                            <TableDataCell>
+                                <div class="text-end flex justify-end">
+                                    <div class="relative group">
+                                        <Link href="#" @click="copyWorkout(workout.id)"
+                                            class="text-blue-400 hover:text-blue-600">
+                                        <DocumentDuplicateIcon class="h-5 w-5" />
+                                        </Link>
+                                        <!-- Tooltip -->
+                                        <div
+                                            class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Copy
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </TableDataCell>
                             <TableDataCell>
                                 <div class="text-end flex justify-end">
                                     <div class="relative group">
