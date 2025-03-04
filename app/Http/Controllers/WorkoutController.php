@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Http\Requests\UpdateWorkoutRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ExerciseResource;
+use App\Http\Resources\ExerciseWorkoutResource;
 use App\Http\Resources\WorkoutResource;
 use App\Models\Category;
+use App\Models\Exercise;
+use App\Models\ExerciseWorkout;
 use App\Models\Workout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class WorkoutController extends Controller
@@ -54,7 +59,20 @@ class WorkoutController extends Controller
      */
     public function show(Workout $workout)
     {
-        //
+        $current_workout = new WorkoutResource($workout->load('category'));
+
+        $all_exercises = $workout->category->exercises;
+        $workout->exercises = ExerciseResource::collection($workout->exercises->load('category'));
+        $available_exercises = $all_exercises->whereNotIn('name', $workout->exercises->pluck('name')->toArray())->all();
+
+        $pivot_exercises_workouts = ExerciseWorkoutResource::collection($workout->exercise_workout->load('workout', 'exercise'));
+
+        return Inertia::render('Fitness/Workouts/Show', [
+            'workout' => $current_workout,
+            'workout_exercises' => $workout->exercises,
+            'available_exercises' => $available_exercises,
+            'pivot_exercises_workouts' => $pivot_exercises_workouts,
+        ]);
     }
 
     /**
@@ -84,5 +102,46 @@ class WorkoutController extends Controller
     {
         $workout->delete();
         return redirect()->route('workouts.index')->with('success', 'Workout deleted successfully');
+    }
+
+    public function attachExercise(Request $request, Workout $workout)
+    {
+        // dd($request);
+        $workout->exercises()->attach($request->attach_exercise_id, ['beschreibung' => $request->beschreibung]);
+
+        $this->show($workout);
+    }
+
+    public function detachExercise(Request $request, Workout $workout)
+    {
+        $workout->exercises()->detach($request->detach_exercise_id);
+
+        $this->show($workout);
+    }
+
+    public function copy_workout(Workout $workout)
+    {
+        $curr_workout = Workout::create([
+            'name' => $workout->name,
+            'datum' => now(),
+            'category_id' => $workout->category_id,
+            'user_id' => $workout->user_id
+        ]);
+
+        foreach ($workout->exercises as $key => $curr_exercise) {
+            $curr_workout->exercises()->attach($curr_exercise->id, ['beschreibung' => $curr_exercise->pivot->beschreibung]);
+        }
+        return redirect()->route('workouts.index')->with('success', 'Workout copied successfully');
+    }
+
+    public function updateBeschreibung(Request $request, Workout $workout, Exercise $exercise)
+    {
+        $exercise_id = $request->currentExerciseId;
+        $beschreibung = $request->currentBeschreibung;
+        // dd($workout);
+
+        $workout->exercises()->updateExistingPivot($exercise_id, ['beschreibung' => $beschreibung]);
+
+        $this->show($workout);
     }
 }

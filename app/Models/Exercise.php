@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
 class Exercise extends Model
@@ -19,6 +20,10 @@ class Exercise extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function workouts(): BelongsToMany {
+        return $this->belongsToMany(Workout::class)->withPivot('beschreibung');
     }
 
     public function scopeSearch(Builder $query, Request $request) {
