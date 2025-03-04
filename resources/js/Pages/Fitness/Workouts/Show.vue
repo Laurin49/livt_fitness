@@ -40,6 +40,7 @@ const form = useForm({
     detach_exercise_id: "",
     beschreibung: "",
     currentBeschreibung: "",
+    errorCurrentBeschreibung: "",
     currentExerciseId: "",
 });
 const attachExercise = () => {
@@ -70,18 +71,25 @@ const detachExercise = () => {
 const showEditModal = ref(false);
 const currentExerciseId = ref(0);
 const currentBeschreibung = ref("");
+const errorCurrentBeschreibung = ref("");
 
 const showModalBeschreibung = (id, beschreibung) => {
     form.currentBeschreibung = beschreibung;
+    form.errorCurrentBeschreibung = "";
     showEditModal.value = true;
     currentExerciseId.value = id;
 };
 
 const closeModal = () => {
     showEditModal.value = false;
+    form.errorCurrentBeschreibung = "";
 };
 
 const editBeschreibung = (exerciseId) => {
+    if (form.currentBeschreibung === "") {
+        form.errorCurrentBeschreibung = "Beschreibung is required";
+        return;
+    }
     closeModal();
     form.currentExerciseId = currentExerciseId.value;
     form.put(route("workouts.update.beschreibung", props.workout,  currentExerciseId.value), {
@@ -166,7 +174,7 @@ const editBeschreibung = (exerciseId) => {
                                             <InputLabel for="beschreibung" value="Beschreibung" />
                                             <textarea id="beschreibung" rows="4" v-model="form.currentBeschreibung"
                                                 class="block w-full mt-1"></textarea>
-                                            <InputError class="mt-2" :message="form.errors.currentBeschreibung" />
+                                            <InputError class="mt-2" :message="form.errorCurrentBeschreibung" />
                                         </div>
                                         <div class="flex mt-6 space-x-4 text-center justify-center">
                                             <DangerButton @click="editBeschreibung(ew.ex)">Update
