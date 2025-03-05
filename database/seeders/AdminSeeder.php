@@ -23,8 +23,24 @@ class AdminSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'schonlau',
-            'email' => 'schonlau@hsv.de',
+            'name' => 'elfadli',
+            'email' => 'elfadli@hsv.de',
+            'email_verified_at' => now(),
+            'password' => bcrypt('hsv1887tv'),
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'polzin',
+            'email' => 'polzin@hsv.de',
+            'email_verified_at' => now(),
+            'password' => bcrypt('hsv1887tv'),
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'welter',
+            'email' => 'welter@diwe-dev.de',
             'email_verified_at' => now(),
             'password' => bcrypt('hsv1887tv'),
             'remember_token' => Str::random(10),

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreWorkoutRequest;
-use App\Http\Requests\UpdateWorkoutRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ExerciseResource;
 use App\Http\Resources\ExerciseWorkoutResource;
 use App\Http\Resources\WorkoutResource;
 use App\Models\Category;
 use App\Models\Exercise;
-use App\Models\ExerciseWorkout;
 use App\Models\Workout;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class WorkoutController extends Controller
@@ -24,6 +20,7 @@ class WorkoutController extends Controller
     public function index(Request $request)
     {
         $workoutQuery = Workout::search($request);
+        $workoutQuery->where('user_id', auth()->id());
 
         $workouts = WorkoutResource::collection($workoutQuery->with('category')->latest()->paginate(10));
         $categories = CategoryResource::collection(Category::all());
@@ -48,9 +45,19 @@ class WorkoutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreWorkoutRequest $request)
+    public function store(Request $request)
     {
-        Workout::create($request->validated());
+        $request->validate([
+            'name' => 'required',
+            'datum' => 'required',
+            'category_id' => 'required',
+        ]);
+        Workout::create([
+            'name' => $request->name,
+            'datum' => $request->datum,
+            'category_id' => $request->category_id,
+            'user_id' => auth()->id(),
+        ]);
         return redirect()->route('workouts.index')->with('success', 'Workout created successfully');
     }
 
@@ -89,9 +96,19 @@ class WorkoutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWorkoutRequest $request, Workout $workout)
+    public function update(Request $request, Workout $workout)
     {
-        $workout->update($request->validated());
+        $request->validate([
+            'name' => 'required',
+            'datum' => 'required',
+            'category_id' => 'required',
+        ]);
+        $workout->update([
+            'name' => $request->name,
+            'datum' => $request->datum,
+            'category_id' => $request->category_id,
+            'user_id' => auth()->id(),
+        ]);
         return redirect()->route('workouts.index')->with('success', 'Workout updated successfully');
     }
 
