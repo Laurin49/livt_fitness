@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ProfileController;
@@ -27,6 +28,12 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(
+    function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    }
+);
 
 Route::resource('/categories', CategoryController::class)->middleware(['auth']);
 Route::resource('/exercises', ExerciseController::class)->middleware(['auth']);

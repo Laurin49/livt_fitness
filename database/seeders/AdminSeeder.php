@@ -20,15 +20,7 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('hsv1887tv'),
             'remember_token' => Str::random(10),
-        ]);
-
-        User::create([
-            'name' => 'elfadli',
-            'email' => 'elfadli@hsv.de',
-            'email_verified_at' => now(),
-            'password' => bcrypt('hsv1887tv'),
-            'remember_token' => Str::random(10),
-        ]);
+        ])->assignRole('admin');
 
         User::create([
             'name' => 'polzin',
@@ -36,7 +28,15 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('hsv1887tv'),
             'remember_token' => Str::random(10),
-        ]);
+        ])->assignRole('trainer');
+
+        User::create([
+            'name' => 'elfadli',
+            'email' => 'elfadli@hsv.de',
+            'email_verified_at' => now(),
+            'password' => bcrypt('hsv1887tv'),
+            'remember_token' => Str::random(10),
+        ])->assignRole('user');
 
         User::create([
             'name' => 'welter',
@@ -44,6 +44,6 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('hsv1887tv'),
             'remember_token' => Str::random(10),
-        ]);
+        ])->assignRole('user');
     }
 }

@@ -30,6 +30,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('admin.index')" :active="route().current('admin.index')">
+                                    Admin
+                                </NavLink>
                                 <NavLink :href="route('categories.index')"
                                     :active="route().current('categories.index')">
                                     Categories
@@ -101,6 +104,9 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.index')" :active="route().current('admin.index')">
+                            Admin
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('categories.index')"
                             :active="route().current('categories.index')">
                             Categories
@@ -109,8 +115,7 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('exercises.index')">
                             Exercises
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('workouts.index')"
-                            :active="route().current('workouts.index')">
+                        <ResponsiveNavLink :href="route('workouts.index')" :active="route().current('workouts.index')">
                             Workouts
                         </ResponsiveNavLink>
                     </div>
