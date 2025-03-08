@@ -14,7 +14,8 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div class="w-full h-full">
         <aside
-            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
+            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 
+                md:w-1/3 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
             <div>
                 <div class="px-6 py-4">
                     <!-- <ApplicationLogo class="w-10 h-10" /> -->
@@ -79,7 +80,7 @@ const showingNavigationDropdown = ref(false);
             <div class="sticky z-10 top-0 h-16 border-b bg-white lg:py-2.5">
                 <div class="flex items-center justify-between px-6 space-x-4 2xl:container">
                     <h5 hidden class="text-2xl font-medium text-gray-600 lg:block"></h5>
-                    <button class="w-12 h-16 -mr-2 border-r lg:hidden">
+                    <button class="w-12 h-16 -mr-2 border-r md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 my-auto" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
