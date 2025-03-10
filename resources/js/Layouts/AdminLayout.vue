@@ -13,8 +13,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div class="w-full h-full">
-        <aside
-            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 
+        <aside class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 
                 md:w-1/3 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
             <div>
                 <div class="px-6 py-4">
@@ -35,7 +34,7 @@ const showingNavigationDropdown = ref(false);
                             </svg>
                             <span class="-mr-1 font-medium">Dashboard</span>
                         </SidebarLink>
-                        <SidebarLink href="" :active="false">
+                        <SidebarLink :href="route('users.index')" :active="route().current('users.index')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -43,7 +42,7 @@ const showingNavigationDropdown = ref(false);
                             </svg>
                             <span class="-mr-1 font-medium">Users</span>
                         </SidebarLink>
-                        <SidebarLink href="" :active="false">
+                        <SidebarLink :href="route('roles.index')" :active="route().current('roles.index')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -52,7 +51,7 @@ const showingNavigationDropdown = ref(false);
 
                             <span class="-mr-1 font-medium">Roles</span>
                         </SidebarLink>
-                        <SidebarLink href="" :active="false">
+                        <SidebarLink :href="route('permissions.index')" :active="route().current('permissions.index')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
