@@ -5,6 +5,11 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
+import VueMultiselect from "vue-multiselect";
+import Table from "@/Components/Table.vue";
+import TableDataCell from "@/Components/TableDataCell.vue";
+import TableHeaderCell from "@/Components/TableHeaderCell.vue";
+import TableRow from "@/Components/TableRow.vue";
 
 import { onMounted, watch } from "vue";
 
@@ -13,13 +18,21 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    permissions: Array,
 });
 const form = useForm({
     name: props.role.name,
+    permissions: [],
 });
 
 onMounted(() => {
+    form.permissions = props.role?.permissions
 });
+// wenn Änderungen bei props.role auftreten, wird die permissions-Liste aktualisiert
+watch(
+    () => props.role,
+    () => (form.permissions = props.role?.permissions)
+);
 </script>
 
 <template>
@@ -43,6 +56,11 @@ onMounted(() => {
                         <TextInput id="name" type="text" class="block w-full mt-1" v-model="form.name" autofocus />
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
+                    <div class="mt-4">
+                        <InputLabel for="permissions" value="Permissions" />
+                        <VueMultiselect v-model="form.permissions" :options="permissions" :multiple="true"
+                            :close-on-select="true" placeholder="Select Permission" label="name" track-by="id" />
+                    </div>
                     <div class="flex items-center mt-4">
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Update
@@ -50,6 +68,37 @@ onMounted(() => {
                     </div>
                 </form>
             </div>
+            <div class="max-w-6xl p-6 mx-auto mt-6 rounded-lg shadow-lg bg-slate-100">
+                <h1 class="text-2xl font-semibold text-indigo-700">
+                    Permissions
+                </h1>
+                <div class="bg-white">
+                    <Table class="mt-4">
+                        <template #header>
+                            <TableRow>
+                                <TableHeaderCell>ID</TableHeaderCell>
+                                <TableHeaderCell>Name</TableHeaderCell>
+                                <TableHeaderCell>Action</TableHeaderCell>
+                            </TableRow>
+                        </template>
+                        <template #default>
+                            <TableRow v-for="rolePermission in role.permissions" :key="rolePermission.id"
+                                class="border-b">
+                                <TableDataCell>{{ rolePermission.id }}</TableDataCell>
+                                <TableDataCell>{{ rolePermission.name }}</TableDataCell>
+                                <TableDataCell class="space-x-4">
+                                    <Link :href="route('roles.permissions.destroy', [role.id, rolePermission.id,])" 
+                                        method="DELETE" as="button"
+                                        class="text-red-400 hover:text-red-600">
+                                    Revoke
+                                    </Link>
+                                </TableDataCell>
+                            </TableRow>
+                        </template>
+                    </Table>
+                </div>
+            </div>
         </div>
     </AdminLayout>
 </template>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>

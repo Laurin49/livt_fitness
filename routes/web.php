@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RevokePermissionFromRoleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutController;
@@ -35,6 +36,8 @@ Route::get('/', function () {
 Route::resource('/users', UserController::class);
 Route::resource('/roles', RoleController::class);
 Route::resource('/permissions', PermissionController::class);
+Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRoleController::class)
+    ->name('roles.permissions.destroy');
 
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(
     function () {
