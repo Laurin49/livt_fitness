@@ -5,8 +5,11 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import VueMultiselect from "vue-multiselect";
 
 defineProps({
+    roles: Array,
+    permissions: Array
 })
 
 const form = useForm({
@@ -14,6 +17,8 @@ const form = useForm({
     email: "",
     password: "",
     password_confirmation: "",
+    roles: [],
+    permissions: []
 });
 
 const submit = () => {
@@ -33,7 +38,7 @@ const submit = () => {
                     class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700">Back</Link>
             </div>
         </div>
-        <div class="max-w-6xl p-6 mx-auto mt-6 rounded-lg shadow-lg bg-slate-100">
+        <div class="max-w-md p-6 mx-auto mt-6 bg-slate-100">
             <form @submit.prevent="submit">
                 <div>
                     <InputLabel for="name" value="Name" />
@@ -70,6 +75,16 @@ const submit = () => {
 
                     <InputError class="mt-2" :message="form.errors.password_confirmation" />
                 </div>
+                <div class="mt-4">
+                    <InputLabel for="roles" value="Roles" />
+                    <VueMultiselect v-model="form.roles" :options="roles" :multiple="true" :close-on-select="true"
+                        placeholder="Pick some" label="name" track-by="id" />
+                </div>
+                <div class="mt-4">
+                    <InputLabel for="permissions" value="Permissions" />
+                    <VueMultiselect v-model="form.permissions" :options="permissions" :multiple="true"
+                        :close-on-select="true" placeholder="Pick some" label="name" track-by="id" />
+                </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
@@ -80,3 +95,4 @@ const submit = () => {
         </div>
     </AdminLayout>
 </template>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
