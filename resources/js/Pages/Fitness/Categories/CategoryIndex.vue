@@ -10,6 +10,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 defineProps(["categories"]);
 const form = useForm({});
@@ -37,7 +38,7 @@ const deleteCategory = () => {
 
     <Head title="Category Index" />
 
-    <AuthenticatedLayout>
+    <AdminLayout>
         <div class="py-2 px-2 mx-auto max-w-7xl">
             <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
                 <h1 class="text-2xl font-semibold text-gray-700">Category Index Page</h1>
@@ -120,5 +121,5 @@ const deleteCategory = () => {
                 </Table>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </AdminLayout>
 </template>

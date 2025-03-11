@@ -1,10 +1,10 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 const props = defineProps({
     category: {
@@ -21,7 +21,7 @@ const form = useForm({
 
     <Head title="Update Category" />
 
-    <AuthenticatedLayout>
+    <AdminLayout>
         <div class="py-4 mx-auto max-w-7xl">
             <div class="flex justify-between px-6">
                 <Link :href="route('categories.index')"
@@ -45,5 +45,5 @@ const form = useForm({
                 </form>
             </div>
         </div>
-    </AuthenticatedLayout>
+        </AdminLayout>
 </template>
