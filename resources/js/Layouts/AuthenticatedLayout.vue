@@ -35,10 +35,10 @@ const { hasRole } = usePermission();
                                 <NavLink v-if="hasRole('admin')" :href="route('users.index')" :active="route().current('users.index')">
                                     Admin
                                 </NavLink>
-                                <NavLink :href="route('categories.index')"
+                                <!-- <NavLink :href="route('categories.index')"
                                     :active="route().current('categories.index')">
                                     Categories
-                                </NavLink>
+                                </NavLink> -->
                                 <NavLink :href="route('exercises.index')" :active="route().current('exercises.index')">
                                     Exercises
                                 </NavLink>

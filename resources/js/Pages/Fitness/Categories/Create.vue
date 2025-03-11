@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -17,7 +17,7 @@ const form = useForm({
 
     <Head title="Create new Category" />
 
-    <AuthenticatedLayout>
+    <AdminLayout>
         <div class="py-4 mx-auto max-w-7xl">
             <div class="flex justify-between px-6">
                 <Link :href="route('categories.index')"
@@ -41,5 +41,5 @@ const form = useForm({
                 </form>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </AdminLayout>
 </template>
